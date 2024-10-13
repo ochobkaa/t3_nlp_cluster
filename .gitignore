@@ -1,0 +1,5 @@
+__pycache__
+venv
+embeddings_clu
+embeddings_classf
+*.json
