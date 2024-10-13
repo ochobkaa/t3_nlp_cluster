@@ -5,6 +5,7 @@ from sklearn.decomposition import SparsePCA, IncrementalPCA
 from sklearn.manifold import TSNE
 from sklearn.base import TransformerMixin, BaseEstimator
 from embeddings import Embeddings
+from paragraph_label import ParagraphLabel
 
 class Transformer(ABC, TransformerMixin, BaseEstimator):
     pass
@@ -129,3 +130,17 @@ class TsneDimReduce(DimReduce):
     @property
     def kl_divergence(self):
         return self.__reducer.kl_divergence_
+    
+    def reduce_lab(self, lab: list[ParagraphLabel]) -> list[ParagraphLabel]:
+        emb = list(map(
+            lambda l: Embeddings(l.title, l.vec),
+            lab
+        ))
+
+        nemb = self.reduce(emb)
+
+        nlab = list(map(
+            lambda ne: ParagraphLabel(ne[0].title, ne[0].label, ne[1].emb),
+            zip(lab, nemb)
+        ))
+        return nlab

@@ -4,6 +4,7 @@ from classification import classify, learn_classifier
 from clusterer_optimizer import opt_cluster
 from clusterers import AggClusterer
 from paragraph_label import ParagraphLabel
+from plotting import plot
 from pre_reduction import load_and_pre_reduce_embs
 from save_labels import SaveData
 
@@ -53,6 +54,7 @@ if __name__ == '__main__':
         save_classf_result(classf_labels)
 
         print('Done!')
+        plot(clu_labels)
 
     else:
         print('Failed to cluster data')
